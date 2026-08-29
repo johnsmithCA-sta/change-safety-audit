@@ -1,0 +1,15 @@
+{
+  "assertions": [
+    {
+      "text": "判定为不需要走本技能审计（新建文件无删除无重建风险）",
+      "pass": true,
+      "evidence": "SKILL.md「何时不用」首条：「新建文件（不涉及删除，无重建风险）」"
+    }
+  ],
+  "passed": 1,
+  "total": 1,
+  "score": 1.0,
+  "mode": "pre-graded",
+  "graded_by": "规则锚点比对（v1.1.0 建集时逐条核对 SKILL.md 规则可支撑正确判定；后续回归须重新逐条核验锚点仍存在）",
+  "graded_at": "2026-08-29"
+}
