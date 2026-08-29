@@ -1,0 +1,20 @@
+{
+  "assertions": [
+    {
+      "text": "给出 md5 可证伪验收（比对内容而非文件存在）",
+      "pass": true,
+      "evidence": "SKILL.md 铁律2：「验收比对 md5」，明确'文件还在≠内容没被改回'"
+    },
+    {
+      "text": "验收条件写成客观可判定条目",
+      "pass": true,
+      "evidence": "SKILL.md 审计五步第5步：「写验收 —— 每项一条客观可判定条件：md5 一致」"
+    }
+  ],
+  "passed": 2,
+  "total": 2,
+  "score": 1.0,
+  "mode": "pre-graded",
+  "graded_by": "规则锚点比对（v1.1.0 建集时逐条核对 SKILL.md 规则可支撑正确判定；后续回归须重新逐条核验锚点仍存在）",
+  "graded_at": "2026-08-29"
+}

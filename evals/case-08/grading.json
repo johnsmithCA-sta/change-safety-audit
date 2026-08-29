@@ -1,0 +1,15 @@
+{
+  "assertions": [
+    {
+      "text": "判定为不属于本技能范围（常规代码审查，非删/改文件与上下文清理）",
+      "pass": true,
+      "evidence": "SKILL.md description 排他边界：「不适用于：常规代码审查与性能评估」；聚焦用途限定为删/改文件与清理上下文两类"
+    }
+  ],
+  "passed": 1,
+  "total": 1,
+  "score": 1.0,
+  "mode": "pre-graded",
+  "graded_by": "规则锚点比对（v1.1.0 建集时逐条核对 SKILL.md 规则可支撑正确判定；后续回归须重新逐条核验锚点仍存在）",
+  "graded_at": "2026-08-29"
+}

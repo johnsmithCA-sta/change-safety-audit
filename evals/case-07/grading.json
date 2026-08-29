@@ -1,0 +1,15 @@
+{
+  "assertions": [
+    {
+      "text": "判定为不需要受管判定与审计流程（临时文件可直接删）",
+      "pass": true,
+      "evidence": "SKILL.md「何时不用」：「临时文件、缓存目录（删了无所谓，不需要判定）」"
+    }
+  ],
+  "passed": 1,
+  "total": 1,
+  "score": 1.0,
+  "mode": "pre-graded",
+  "graded_by": "规则锚点比对（v1.1.0 建集时逐条核对 SKILL.md 规则可支撑正确判定；后续回归须重新逐条核验锚点仍存在）",
+  "graded_at": "2026-08-29"
+}

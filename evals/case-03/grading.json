@@ -1,0 +1,20 @@
+{
+  "assertions": [
+    {
+      "text": "指出备份名带日期=必然熵增，予以否定",
+      "pass": true,
+      "evidence": "SKILL.md 铁律3：「备份用固定名同名覆盖 —— 备份名里带日期 = 必然熵增」，直接否定用户提议"
+    },
+    {
+      "text": "给出固定名同名覆盖方案",
+      "pass": true,
+      "evidence": "同上给出替代方案：固定名同名覆盖"
+    }
+  ],
+  "passed": 2,
+  "total": 2,
+  "score": 1.0,
+  "mode": "pre-graded",
+  "graded_by": "规则锚点比对（v1.1.0 建集时逐条核对 SKILL.md 规则可支撑正确判定；后续回归须重新逐条核验锚点仍存在）",
+  "graded_at": "2026-08-29"
+}

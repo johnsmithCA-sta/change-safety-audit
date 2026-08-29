@@ -1,0 +1,25 @@
+{
+  "assertions": [
+    {
+      "text": "先量化（跑 audit_tokens.py 出占比表）再动刀",
+      "pass": true,
+      "evidence": "SKILL.md 审计五步第1步：「量化 —— 跑 scripts/audit_tokens.py，先出占比表再动刀」"
+    },
+    {
+      "text": "查重：复述内容留单一事实源，其余改指针",
+      "pass": true,
+      "evidence": "第2步：「查重 —— 文件间互相复述的，留一处作单一事实源，其余改成指针」"
+    },
+    {
+      "text": "扫凭据：凭据不进记忆，只留凭据目录指针",
+      "pass": true,
+      "evidence": "第3步：「扫凭据 —— 凭据永不进记忆，只留平台凭据目录指针」"
+    }
+  ],
+  "passed": 3,
+  "total": 3,
+  "score": 1.0,
+  "mode": "pre-graded",
+  "graded_by": "规则锚点比对（v1.1.0 建集时逐条核对 SKILL.md 规则可支撑正确判定；后续回归须重新逐条核验锚点仍存在）",
+  "graded_at": "2026-08-29"
+}

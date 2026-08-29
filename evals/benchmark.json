@@ -1,0 +1,65 @@
+{
+  "cases": 8,
+  "graded": 8,
+  "assertion_passed": 14,
+  "avg_score": 1.0,
+  "verdict": "PASS",
+  "detail": [
+    {
+      "case": "case-01",
+      "mode": "pre-graded",
+      "passed": 3,
+      "total": 3,
+      "score": 1.0
+    },
+    {
+      "case": "case-02",
+      "mode": "pre-graded",
+      "passed": 2,
+      "total": 2,
+      "score": 1.0
+    },
+    {
+      "case": "case-03",
+      "mode": "pre-graded",
+      "passed": 2,
+      "total": 2,
+      "score": 1.0
+    },
+    {
+      "case": "case-04",
+      "mode": "pre-graded",
+      "passed": 3,
+      "total": 3,
+      "score": 1.0
+    },
+    {
+      "case": "case-05",
+      "mode": "pre-graded",
+      "passed": 1,
+      "total": 1,
+      "score": 1.0
+    },
+    {
+      "case": "case-06",
+      "mode": "pre-graded",
+      "passed": 1,
+      "total": 1,
+      "score": 1.0
+    },
+    {
+      "case": "case-07",
+      "mode": "pre-graded",
+      "passed": 1,
+      "total": 1,
+      "score": 1.0
+    },
+    {
+      "case": "case-08",
+      "mode": "pre-graded",
+      "passed": 1,
+      "total": 1,
+      "score": 1.0
+    }
+  ]
+}
