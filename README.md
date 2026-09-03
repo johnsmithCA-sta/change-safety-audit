@@ -1,5 +1,21 @@
 # change-safety-audit · 变更安全审计
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.1.0-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
+
+**English** — Validation and anti-footgun rules to run *before* deleting or modifying files: managed-file detection, md5 falsifiable verification, entropy-safe backup naming, and context-injection slimming.
+
+Two high-frequency, easy-to-regret operations: deleting things and changing things. This skill makes you **prove the change is safe before you make it**.
+
+**Install / 安装**
+
+```bash
+skillhub install change-safety-audit --namespace user_65c8c185
+# or / 或
+git clone https://github.com/johnsmithCA-sta/change-safety-audit.git
+```
+
+---
+
 删除或改动文件前的验证与防坑规则。
 
 ## 解决什么问题
