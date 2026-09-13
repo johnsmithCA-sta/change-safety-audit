@@ -1,6 +1,6 @@
 # change-safety-audit · 变更安全审计
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.2.0-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.2.1-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
 
 **English** — Validation and anti-footgun rules to run *before* deleting or modifying files: managed-file detection, md5 falsifiable verification, entropy-safe backup naming, context-injection slimming, and orchestration for splitting a batch of changes across multiple agents.
 
