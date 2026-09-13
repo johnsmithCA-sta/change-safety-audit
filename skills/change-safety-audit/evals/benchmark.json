@@ -1,7 +1,7 @@
 {
-  "cases": 8,
-  "graded": 8,
-  "assertion_passed": 14,
+  "cases": 9,
+  "graded": 9,
+  "assertion_passed": 18,
   "avg_score": 1.0,
   "verdict": "PASS",
   "detail": [
@@ -59,6 +59,13 @@
       "mode": "pre-graded",
       "passed": 1,
       "total": 1,
+      "score": 1.0
+    },
+    {
+      "case": "case-09",
+      "mode": "pre-graded",
+      "passed": 4,
+      "total": 4,
       "score": 1.0
     }
   ]

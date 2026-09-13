@@ -1,8 +1,8 @@
 # change-safety-audit · 变更安全审计
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.1.0-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.2.0-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
 
-**English** — Validation and anti-footgun rules to run *before* deleting or modifying files: managed-file detection, md5 falsifiable verification, entropy-safe backup naming, and context-injection slimming.
+**English** — Validation and anti-footgun rules to run *before* deleting or modifying files: managed-file detection, md5 falsifiable verification, entropy-safe backup naming, context-injection slimming, and orchestration for splitting a batch of changes across multiple agents.
 
 Two high-frequency, easy-to-regret operations: deleting things and changing things. This skill makes you **prove the change is safe before you make it**.
 
@@ -50,6 +50,17 @@ git clone https://github.com/johnsmithCA-sta/change-safety-audit.git
 
 膨胀几乎全部来自把快照当规则塞进记忆。
 
+### 多 agent 并行改动的编排
+
+要把一批改动分给多个 agent / 多个会话并行做：
+
+1. **按「文件」切分，不按「条目」切分** —— 一个文件只能有一个写入者；条目常横跨多文件，须按文件边界重新归并。风险最高、要能反向验证的那部分留给自己做
+2. **跨文件共享口径逐字下发** —— 同一个常量出现在两处以上就会漂，把口径原样粘进每份指令
+3. **并行 Edit 竞态按常态处理** —— 同一文件上「读—改—写」必须串行，每条改动后回读确认
+4. **要求对方报「没做到的」** —— 并点名硬约束（不重排既有编号、不写来源与日期、不动可写范围外的文件）
+
+收尾的 **10 步终检序列只能由主 agent 做**，判据、清单与实测踩坑见 `references/并行编排与终检.md`。
+
 ## 用法
 
 量化当前上下文开销：
@@ -65,19 +76,20 @@ python3 scripts/audit_tokens.py --dir ~/.workbuddy    # 扫描目录
 ## 目录结构
 
 ```
-SKILL.md                        主入口（44 行，聚焦单一用途）
+SKILL.md                        主入口（只放判断入口，细节按需加载）
 scripts/audit_tokens.py         token 开销量化脚本
 references/
   硬规则详解.md                  三条铁律的推导与踩坑实例
   审计模板.md                    检查清单、去重命令、产出模板
   互评判据.md                    多 agent 互评五判据与价值衰减曲线
+  并行编排与终检.md              并行改动的四条分工纪律、10 步终检序列、实测踩坑
 ```
 
 采用渐进披露：SKILL.md 只放判断入口，详细推导按需加载。
 
 ## 何时不用
 
-新建文件、有测试覆盖的代码改动、临时文件与缓存目录——这些场景没有重建风险或有现成验收手段，不需要本技能。
+单个新建文件、有测试覆盖的代码改动、临时文件与缓存目录——这些场景没有重建风险或有现成验收手段，不需要本技能。
 
 ## 许可
 
