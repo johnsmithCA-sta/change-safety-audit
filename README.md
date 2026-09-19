@@ -1,6 +1,6 @@
 # change-safety-audit · 变更安全审计
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.2.1-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg) ![Release](https://img.shields.io/badge/Release-v1.3.1-green.svg) ![SkillHub](https://img.shields.io/badge/SkillHub-@user_65c8c185%2Fchange-safety-audit-orange.svg)
 
 **English** — Validation and anti-footgun rules to run *before* deleting or modifying files: managed-file detection, md5 falsifiable verification, entropy-safe backup naming, context-injection slimming, and orchestration for splitting a batch of changes across multiple agents.
 
@@ -29,17 +29,19 @@ git clone https://github.com/johnsmithCA-sta/change-safety-audit.git
 
 ## 核心内容
 
-### 三条铁律
+### 五条铁律
 
 1. **受管文件先判定** —— 有些文件删了会被平台重建，判定只能靠实验，且必须遵守观测窗口规则
 2. **验收比对 md5** —— 文件"还在"不等于"内容没被改回默认值"
-3. **备份用固定名同名覆盖** —— 备份名里带日期 = 必然熵增
+3. **默认不留备份** —— 先问"这次操作可逆吗"：可逆就不留副本；要留则固定名同名覆盖，不写日期
+4. **删除前查引用面** —— 全类型检索（不只 `*.md`），命中项逐条分「活引用 / 历史叙述 / 别名」；不做这一步，删掉的可能不是冗余、而是唯一副本
+5. **改上游先枚举下游** —— 改会被二次加工的产物（推送文案 / 报表 / 导出文件）前先穷举消费者，验收走端到端 dry 跑
 
 ### 观测窗口规则
 
 > 对「某机制不存在」的判定，观测窗口必须 **≥ 该机制已知最大周期**。周期未知时，只能说「X 分钟内未观测到」，**不得下否定结论**。
 
-这条来自一次真实返工：删除文件后观察 4.5 分钟未见重建就下结论"删即最终解"，第 11 分钟文件重生。
+判据来自实践：窗口取小了，就会把「尚未发生」当成「不会发生」，据此得出的结论会被后来的事实推翻。
 
 ### 决策根：规则 vs 快照
 
@@ -49,6 +51,11 @@ git clone https://github.com/johnsmithCA-sta/change-safety-audit.git
 | 快照 | 项目进展到哪了 | 长，按需检索，不进固定注入 |
 
 膨胀几乎全部来自把快照当规则塞进记忆。
+
+### 批量改引用 / 归集搬家
+
+1. **先圈定 root** —— 只圈活跃文档，显式排除注入层（追加型日志只追加不许覆写）、代码仓、历史归档目录
+2. **归集四步** —— md5 清单当反向依据（不留备份副本）→ 分批移动 + 两侧校验 → 移完 grep 旧路径找指针 → 历史用一条注记覆盖
 
 ### 多 agent 并行改动的编排
 
@@ -71,18 +78,19 @@ python3 scripts/audit_tokens.py ~/.workbuddy/SOUL.md  # 指定文件
 python3 scripts/audit_tokens.py --dir ~/.workbuddy    # 扫描目录
 ```
 
-零第三方依赖，仅 Python 标准库。默认目标按 WorkBuddy 平台配置，其他平台改 `DEFAULT_TARGETS` 即可。
+零第三方依赖，仅 Python 标准库。注入目录与身份文件按平台自动探测候选路径（只统计本机真实存在的那一组），也可以用 `--file` / `--dir` 显式指定。
 
 ## 目录结构
 
 ```
 SKILL.md                        主入口（只放判断入口，细节按需加载）
-scripts/audit_tokens.py         token 开销量化脚本
+scripts/audit_tokens.py         token 开销量化脚本（跨平台路径探测）
 references/
-  硬规则详解.md                  三条铁律的推导与踩坑实例
-  审计模板.md                    检查清单、去重命令、产出模板
+  硬规则详解.md                  五条铁律的推导与踩坑实例
+  审计模板.md                    检查清单、去重命令、产出模板、平台适配对照
   互评判据.md                    多 agent 互评五判据与价值衰减曲线
-  并行编排与终检.md              并行改动的四条分工纪律、10 步终检序列、实测踩坑
+  并行编排与终检.md              并行改动的四条分工纪律、10 步终检序列
+  文档归集.md                    批量改引用前圈定 root、归集四步、旧路径指针复查
 ```
 
 采用渐进披露：SKILL.md 只放判断入口，详细推导按需加载。

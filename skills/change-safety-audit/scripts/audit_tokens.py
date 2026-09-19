@@ -7,25 +7,29 @@ audit_tokens.py — 审计每会话固定注入的上下文 token 开销。
 英数符号 0.35 token/字符），用于比较与排序，不用于计费。
 
 用法:
-    python3 audit_tokens.py                        # 用内置默认目标
-    python3 audit_tokens.py ~/.workbuddy/SOUL.md   # 指定一个或多个文件
-    python3 audit_tokens.py --dir ~/.workbuddy     # 扫描目录下所有 .md
+    python3 audit_tokens.py                        # 自动探测本机的身份 / 记忆文件
+    python3 audit_tokens.py <路径> [<路径> ...]     # 指定一个或多个文件
+    python3 audit_tokens.py --dir <注入目录>        # 扫描目录下所有 .md
 """
 
 import argparse
 import os
 import sys
 
-# 按你的平台修改。常见位置：
-#   WorkBuddy  ~/.workbuddy/{SOUL,IDENTITY,USER,MEMORY}.md
-#   Claude     ~/.claude/CLAUDE.md
-#   OpenClaw   各自工作空间的 memory 目录
-DEFAULT_TARGETS = [
-    ("SOUL.md", "~/.workbuddy/SOUL.md"),
-    ("IDENTITY.md", "~/.workbuddy/IDENTITY.md"),
-    ("USER.md", "~/.workbuddy/USER.md"),
-    ("MEMORY.md", "~/.workbuddy/MEMORY.md"),
-]
+# 不绑定单一平台：候选按平台分组，运行时只取 **本机真实存在** 的那些。
+# 其他平台 / 自建 Agent：把它的身份或记忆文件加进对应分组即可；
+# 也可以完全不用默认值，直接用命令行传入路径。
+PLATFORM_CANDIDATES = {
+    "WorkBuddy": [
+        "~/.workbuddy/SOUL.md",
+        "~/.workbuddy/IDENTITY.md",
+        "~/.workbuddy/USER.md",
+        "~/.workbuddy/MEMORY.md",
+    ],
+    "Claude Code": [
+        "~/.claude/CLAUDE.md",
+    ],
+}
 
 CJK = 0.9    # 中文 token 系数
 OTHER = 0.35  # 英数与符号 token 系数
@@ -63,7 +67,16 @@ def main():
                     targets.append((name, os.path.join(d, name)))
 
     if not targets:
-        targets = DEFAULT_TARGETS
+        candidates = [("%s/%s" % (plat, os.path.basename(p)), p)
+                      for plat, paths in PLATFORM_CANDIDATES.items() for p in paths]
+        targets = [(n, p) for n, p in candidates
+                   if os.path.exists(os.path.expanduser(p))]
+        if not targets:
+            print("未在本机探测到已知平台的身份 / 记忆文件。")
+            print("候选如下，请用命令行传入实际路径（或用 --dir 指定注入目录）：")
+            for n, p in candidates:
+                print("  %-28s %s" % (n, p))
+            return 2
 
     total = 0
     missing = []
